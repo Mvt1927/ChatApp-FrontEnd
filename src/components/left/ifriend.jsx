@@ -38,7 +38,7 @@ class IFriend extends Component {
     }
     return (
       <div className={"item-friend-container p-2.5 h-17 box-border hover:bg-f2f2f2 hover:rounded-lg cursor-pointer first-line:"+ this.props.className}>
-        <div className="ite./public/avatar.jpgm-friend w-full h-full flex flex-row">
+        <div className="item-friend w-full h-full flex flex-row">
           <div className="friend-avatar w-1/5 pr-2.5 ">
             <img
               className="w-12 h-12 rounded-full box-border"

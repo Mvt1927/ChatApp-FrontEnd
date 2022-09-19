@@ -1,7 +1,8 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import IFriend from "./components/ifriend";
+import IFriend from "./components/left/ifriend";
 import FunctionButton from "./components/funBtn";
+import FriendCard from './components/right/cardFriend'
 import "./App.css";
 
 
@@ -16,15 +17,15 @@ function App() {
     e.preventDefault();
     var element = document.getElementById("under_line")
     if (e.currentTarget.scrollTop > 5) {
-      element.className  = "border-b";
+      element.className  = "border-b border-border-color";
     } else {
       element.className = "";
     }
   }
   return (
     <div className="App flex flex-row">
-      <div className="left border-black flex flex-col flex-shrink-0 flex-grow-0">
-        <div className="user-top-left flex flex-col px-4 py-2.5">
+      <div className="left border-r border-border-color flex flex-col flex-shrink-0 flex-grow-0">
+        <div className="user-top-left flex flex-col px-4 py-2.5 h-14">
           <div className="user flex flex-row pad">
             <div className="avatar-left w-3/12 flex">
               <div className="w-9 h-9 hover:bg-[#00000020] hover:opacity-100 rounded-full cursor-pointer">
@@ -89,8 +90,68 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="right border-black">
+      <div className="right">
+        <div className="right-container flex flex-col h-full">
+          <div className="friend-top-right-container border-b border-border-color h-14">
+            <div className="friend-container h-full flex flex-row justify-between px-2.5 py-1">
+              <FriendCard className="justify-start w-fit " obj={testObj}/>
+              <div className="fun-btn flex flex-row w-fit">
+                <FunctionButton 
+                  className="call-right text-blue-400" 
+                  wight='9' 
+                  height='9' 
+                  iconClassName="fa-solid fa-phone "
+                  iconSize="text-lg"
+                  />
+                <FunctionButton 
+                  className="video-call-button-right text-blue-400" 
+                  wight='9' 
+                  height='9' 
+                  iconClassName="fa-solid fa-video"
+                  iconSize="text-lg"
+                  />
+                <FunctionButton 
+                  className="more-button-right text-blue-400" 
+                  wight='9' 
+                  height='9' 
+                  iconClassName="fa-solid fa-ellipsis"
+                  iconSize="text-lg"
+                  />
+              </div>
+            </div>
+          </div>
+          <div className="message-mid-right-container h-11/12">
+              <div className="message-mid-container flex flex-col justify-between h-full">
+                <div className="message-interface-container h-11/12 overflow-hidden">
+                  <div className="message-interface overflow-y-scroll max-h-full">
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                    <IFriend/>
+                  </div>
+                </div>
+                <div className="message-fuc-btn-container h-14 border-t border-border-color">
 
+                </div>
+              </div>
+          </div>
+        </div>
       </div>
     </div>
   );

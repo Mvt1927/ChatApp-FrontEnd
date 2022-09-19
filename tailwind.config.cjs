@@ -37,6 +37,9 @@ module.exports = {
         'f2f2f2': '#f2f2f2',
         '7C676B': '#7C676B',
         'black': 'black',
+        'c4c4c4': '#c4c4c4',
+        'border-color': '#CED0D4',
+
       },
     },
   },
