@@ -1,6 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import IFriend from "./components/ifriend";
+import FunctionButton from "./components/funBtn";
 import "./App.css";
 
 
@@ -38,16 +39,20 @@ function App() {
               <p className="text-center text-base">Chat</p>
             </div>
             <div className="fun-btn-right w-3/12 text-center flex flex-row justify-center">
-              <div className="meeting-button-left w-9 h-9 flex items-center self-center hover:rounded-full hover:bg-f2f2f2 cursor-pointer">
-                <div className="meeting-icon">
-                  <i className="fa-light fa-video-plus flex items-center justify-center text-lg"></i>
-                </div>
-              </div>
-              <div className="new-button-right w-9 h-9 flex items-center self-center hover:rounded-full hover:bg-f2f2f2 cursor-pointer">
-                <div className="new-icon">
-                  <i className="icon bi bi-pencil-square flex items-center justify-center text-lg"></i>
-                </div>
-              </div>
+              <FunctionButton 
+                className="meeting-button-left" 
+                wight='9' 
+                height='9' 
+                iconClassName="fa-light fa-video-plus"
+                iconSize="text-lg"
+                />
+              <FunctionButton 
+                className="new-button-right" 
+                wight='9' 
+                height='9' 
+                iconClassName="icon bi bi-pencil-square"
+                iconSize="text-lg"
+                />
             </div>
           </div>
         </div>
