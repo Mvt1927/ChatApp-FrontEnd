@@ -120,10 +120,10 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="message-mid-right-container h-11/12">
+          <div className="message-mid-right-container -h-h-14">
               <div className="message-mid-container flex flex-col justify-between h-full">
-                <div className="message-interface-container h-11/12 overflow-hidden">
-                  <div className="message-interface overflow-y-scroll max-h-full">
+                <div className="message-interface-container -h-h-14 overflow-hidden">
+                  <div className="message-interface overflow-y-scroll max-h-full flex flex-col-reverse">
                     <IFriend/>
                     <IFriend/>
                     <IFriend/>
@@ -146,8 +146,60 @@ function App() {
                     <IFriend/>
                   </div>
                 </div>
-                <div className="message-fuc-btn-container h-14 border-t border-border-color">
-
+                <div className="message-fuc-btn-container h-14 border-t border-f2f2f2">
+                  <div className="message-fuc-btn p-2.252 h-full flex items-center">
+                    <div className="fuc-btn-left flex flex-row w-fit items-center">
+                      <FunctionButton 
+                      className="add-file-button-right text-blue-400 text" 
+                      wight='9' 
+                      height='9' 
+                      iconClassName="fa-solid fa-circle-plus"
+                      iconSize="text-lg"
+                      />
+                      <FunctionButton 
+                      className="add-file-button-right text-blue-400 " 
+                      wight='9' 
+                      height='9' 
+                      iconClassName="fa-regular fa-image"
+                      iconSize="text-lg"
+                      />
+                      <FunctionButton 
+                      className="add-file-button-right text-blue-400 " 
+                      wight='9' 
+                      height='9' 
+                      iconClassName="fa-solid fa-gif"
+                      iconSize="text-lg"
+                      />
+                    </div>
+                    <div className="input-mid-container ml-2.5 pl-2.5 rounded-full flex flex-row justify-items-center h-full bg-f2f2f2">
+                      <input 
+                      type="text" 
+                      className="text-sm font-light h-full w-full p-2.252 rounded-full bg-f2f2f2 
+                        placeholder:text-sm placeholder:text-7C676B 
+                        focus:outline-none" 
+                      placeholder="Aa" />
+                      {/* <textarea name="text" rows="14" cols="10" wrap="soft" maxlength="40" style={{overflow:"hidden", resize:"none"}}></textarea> */}
+                      <div className="w-9 h-9"> 
+                      <FunctionButton 
+                      className="add-file-button-right text-blue-400 hover:bg-[#dddddd]"
+                      wight='9' 
+                      height='9' 
+                      hascolor='true' 
+                      iconClassName="fa-solid fa-gif"
+                      iconSize="text-lg"
+                      />
+                      </div>
+                    </div>
+                    <div className="fun-send-btn-end w-15 flex justify-center">
+                    <FunctionButton 
+                      className="send-message-button-right text-blue-400"
+                      wight='9' 
+                      height='9'
+                      iconClassName="fa-solid fa-paper-plane-top"
+                      iconSize="text-lg"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
           </div>

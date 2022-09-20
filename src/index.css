@@ -30,7 +30,9 @@ html,body,.left,.right,#root,.App{
 
 .App>.left{
   width: min(360px,max(40%,360px)) ;
+  /* height: calc(100% - 3.5rem); */
 }
+
 /*
 .App>.right{
   width: 100%;

@@ -7,9 +7,9 @@ class FunctionButton extends Component {
   render() {
     return (
       <div
-        className={`${this.props.className} w-${this.props.wight} h-${this.props.height} flex items-center self-center hover:rounded-full hover:bg-f2f2f2 cursor-pointer`}
+        className={`flex items-center self-center hover:rounded-full ${this.props.hascolor=='true'?'':'hover:bg-f2f2f2'} cursor-pointer ${this.props.className} w-${this.props.wight} h-${this.props.height}`}
       >
-        <div className={`${this.props.className}-icon`}>
+        <div className={`icon`}>
           <i
             className={`${this.props.iconClassName} flex items-center justify-center ${this.props.iconSize}`}
           ></i>
