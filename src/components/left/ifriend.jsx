@@ -4,11 +4,13 @@ class IFriend extends Component {
     super(props);
   }
   render() {
-    var srcAvatarFriend = './public/avatar.jpg'
+    var srcAvatarFriend = '/avatar.jpg'
     var nameFriend = 'Dm moi'
     var lastestMessageFriend = "Dm thang moi"
+    var idFriend =""
     var timeLastestMessageFriend ="Mon Sep 19 2022 10:11:40 GMT+0700 (Giờ Đông Dương)"
     if (this.props.obj!=null) {
+      idFriend = this.props.obj.id
       srcAvatarFriend = this.props.obj.src_AvatarFriend
       nameFriend = this.props.obj.t_nameFriend
       lastestMessageFriend = this.props.obj.t_lastMessFriend
@@ -37,7 +39,7 @@ class IFriend extends Component {
       :parseInt((currentDate - lastDate)/1000)+""+text_second
     }
     return (
-      <div className={"item-friend-container p-2.5 h-17 box-border hover:bg-f2f2f2 hover:rounded-lg cursor-pointer first-line:"+ this.props.className}>
+      <div id={idFriend} className={"item-friend-container p-2.5 h-17 box-border hover:bg-f2f2f2 hover:rounded-lg cursor-pointer first-line:"+ this.props.className}>
         <div className="item-friend w-full h-full flex flex-row">
           <div className="friend-avatar w-1/5 pr-2.5 ">
             <img

@@ -10,7 +10,7 @@ class FriendCard extends Component{
                 <div className="h-12 p-1.5 cursor-pointer flex items-center">
                     <img
                     className="w-9 h-9 rounded-full"
-                    src="./public/avatar.jpg"
+                    src="/avatar.jpg"
                     alt="avatar"
                     />
                 </div>
