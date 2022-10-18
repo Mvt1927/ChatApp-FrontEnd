@@ -45,7 +45,7 @@ class IFriend extends Component {
             <img
               className="w-12 h-12 rounded-full box-border"
               src={srcAvatarFriend}
-              alt="avatar"
+              alt=""
             />
           </div>
           <div className="friend-info w-4/5 flex flex-col">

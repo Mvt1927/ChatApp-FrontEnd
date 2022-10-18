@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes , Route ,useParams } from "react-router-dom";
 import Message from "./pages/Message";
 import Test from "./pages/Test"
+import Login from "./pages/login";
 
 function MessageWId() {
     const params = useParams();
@@ -17,6 +18,7 @@ export default function MyRouter(){
                 <Route path="/m/:id" exact element={<MessageWId />} />
                 <Route path="/m" exact element={<MessageWId />}/>
                 <Route path="/test/:id" exact element={<Test id={'123'}/>}/>
+                <Route path="/test/login" element={<Login />}/>
             </Routes>
         </BrowserRouter>
     )
