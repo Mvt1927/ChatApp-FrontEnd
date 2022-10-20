@@ -1,24 +1,41 @@
-import { Component, useState } from "react";
-class IFriend extends Component {
+import { Component} from "react";
+
+class UserCardContainer extends Component {
   constructor(props) {
     super(props);
+    this.selectID = ""
+    this.userInformation = {
+      srcAvatar : '/avatar.jpg',
+      username : 'Username',
+      lastMsg : "lastest message",
+      id : "",
+      timeLastMsg : "",
+      timeAway: "",
+    }
+    this.navigate =()=> {}
+  }
+  
+  componentDidMount(){
+    const navigate = this.props.navigate
+    this.navigate = navigate||this.navigate
+  }
+
+  handleOnClick = (e,id) =>{
+    this.navigate("/m/"+id)
   }
   render() {
-    var srcAvatarFriend = '/avatar.jpg'
-    var nameFriend = 'Dm moi'
-    var lastestMessageFriend = "Dm thang moi"
-    var idFriend =""
-    var timeLastestMessageFriend ="Mon Sep 19 2022 10:11:40 GMT+0700 (Giờ Đông Dương)"
+    
     if (this.props.obj!=null) {
-      idFriend = this.props.obj.id
-      srcAvatarFriend = this.props.obj.src_AvatarFriend
-      nameFriend = this.props.obj.t_nameFriend
-      lastestMessageFriend = this.props.obj.t_lastMessFriend
-      timeLastestMessageFriend = this.props.obj.time_timeLastMessFriend
+      this.userInformation.id = this.props.obj.id || this.userInformation.id
+      this.selectID = this.props.selectID || this.selectID
+      this.userInformation.username = this.props.obj.username || this.userInformation.username
+      this.userInformation.srcAvatar = this.props.obj.srcAvatar || this.userInformation.srcAvatar
+      this.userInformation.lastMsg = this.props.obj.lastestMsg || this.userInformation.lastMsg
+      this.userInformation.timeLastMsg = this.props.obj.timeLastestMsg|| this.userInformation.timeLastMsg
     }
-    if (timeLastestMessageFriend!=null&& new Date(timeLastestMessageFriend)!='Invalid Date') {
+    if (this.userInformation.timeLastMsg!==""&& new Date(this.userInformation.timeLastMsg)!='Invalid Date') {
       var currentDate = new Date();
-      var lastDate = new Date(timeLastestMessageFriend);
+      var lastDate = new Date(this.userInformation.timeLastMsg);
       var text_year = ' year'
       var text_week = ' week'
       var text_day = ' day'
@@ -37,23 +54,24 @@ class IFriend extends Component {
       :parseInt((currentDate - lastDate)/1000/60/60)+""+text_hour
       :parseInt((currentDate - lastDate)/1000/60)+""+text_minute
       :parseInt((currentDate - lastDate)/1000)+""+text_second
+      this.userInformation.timeAway = timeAway || this.userInformation.timeAway
     }
     return (
-      <div id={idFriend} className={"item-friend-container p-2.5 h-17 box-border hover:bg-f2f2f2 hover:rounded-lg cursor-pointer first-line:"+ this.props.className}>
+      <div id={this.userInformation.id} className={(this.selectID == this.userInformation.id?" select ":"") +" item-friend-container p-2.5 h-17 box-border hover:bg-f2f2f2 hover:rounded-lg cursor-pointer "+ this.props.className} onClick={(event) => this.handleOnClick(event, this.userInformation.id)}>
         <div className="item-friend w-full h-full flex flex-row">
           <div className="friend-avatar w-1/5 pr-2.5 ">
             <img
               className="w-12 h-12 rounded-full box-border"
-              src={srcAvatarFriend}
+              src={this.userInformation.srcAvatar}
               alt=""
             />
           </div>
           <div className="friend-info w-4/5 flex flex-col">
-            <span className="name-friend text text-base">{nameFriend}</span>
+            <span className="name-friend text text-base">{this.userInformation.username}</span>
             <div className="h-2"></div>
             <div className="lastest-message flex flex-row">
               <span className="short-text-latest-message max-w-fit w-4/6 text-xs font-light whitespace-nowrap truncate">
-                {lastestMessageFriend}
+                {this.userInformation.lastMsg}
               </span>
               <p className="text-xs">&nbsp;</p>
               <p className="text-xs"> · </p>
@@ -68,4 +86,4 @@ class IFriend extends Component {
     );
   }
 }
-export default IFriend;
+export default UserCardContainer;

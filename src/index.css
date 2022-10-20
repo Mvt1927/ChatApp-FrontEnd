@@ -75,7 +75,7 @@ html,body,.left,.right,#root,.App{
   width: 16px;
   text-align: center;
 } */
-.selection{
+.select{
   background-color: #f2f2f2;
   border-radius: 0.5rem
 }
