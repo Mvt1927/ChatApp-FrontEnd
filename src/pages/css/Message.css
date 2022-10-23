@@ -1,12 +1,35 @@
-.login-card{
-    -webkit-box-shadow: 10px 10px 20px 5px rgba(100,100,100,0.5);
-    -moz-box-shadow: 10px 10px 20px 5px rgba(100,100,100,0.5);
-    box-shadow: 10px 10px 20px 5px rgba(100,100,100,0.5);
+.login-card {
+    -webkit-box-shadow: 10px 10px 20px 5px rgba(100, 100, 100, 0.5);
+    -moz-box-shadow: 10px 10px 20px 5px rgba(100, 100, 100, 0.5);
+    box-shadow: 10px 10px 20px 5px rgba(100, 100, 100, 0.5);
     border-radius: 15px 15px 15px 15px;
     -moz-border-radius: 15px 15px 15px 15px;
     -webkit-border-radius: 15px 15px 15px 15px;
     border: 0px solid #ffffff;
 }
-.min-h-3\/4{
+
+.min-h-3\/4 {
     min-height: 75%;
 }
+
+.min-w-1\/4 {
+    min-width: 25%;
+}
+
+.min-w-9 {
+    min-width: 2.25rem;
+}
+
+/* 
+.message-container:has(.sender)+.message-container:has(.sender)>.sender>.content{
+    border-top-right-radius: 10px;
+    
+}
+
+.message-container:has(.sender):first-of-type+.message-container:has(.sender)>.sender>.content{
+    border-bottom-right-radius: 10px;
+}
+.message-container:has(.reciver) +.message-container:has(.reciver)>.reciver>.content {
+    border-top-left-radius: 10px;
+}
+ */

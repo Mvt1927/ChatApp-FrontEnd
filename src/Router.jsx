@@ -1,38 +1,34 @@
-import {React, useEffect} from "react";
+import {React, useEffect, useRef} from "react";
 import { BrowserRouter, Routes , Route ,useParams, useNavigate } from "react-router-dom";
 import Messages from "./pages/Message";
 import Test from "./pages/Test"
 import Login from "./pages/login";
 import Register from "./pages/register";
 import myGlobalSetting from "./pages/myGlobalSetting";
+import MessageWId from "./MessageRouter"
+import { ToHome } from "./navToHome";
+import { io } from "socket.io-client";
+// import { socket } from "./pages/service/socket";
 
 
-
-function MessageWId() {
-    const params = useParams();
+function ToLogin() {
     const navigate = useNavigate()
-    // console.log(params.id==null);
-    // console.log(params.id);
-    if(params.id==null) return <Messages noid={true}/>;
-    const id = Number(params.id)
-    if (id) return <Messages id={params.id}/>;
     return useEffect(() => {
         navigate('/m')
     })
 }
-function ToHome() {
+function ToRoute(path) {
     const navigate = useNavigate()
     return useEffect(() => {
-        navigate('/m')
+        navigate(path.url)
     })
 }
 
 function Logout(){
-    const navigate = useNavigate()
     sessionStorage.removeItem(myGlobalSetting.ACCESS_TOKEN)
-    return useEffect(() => {
-        navigate('/m')
-    })
+    const socket = sessionStorage.getItem(myGlobalSetting.SOCKET)
+    socket.current?.disconnect()
+    return <ToHome />
 }
 export default function MyRouter(){
     return (
