@@ -7,6 +7,6 @@ export default function MessageWId() {
     if (params.id == null) return <Messages noid={true} />;
     const id = Number(params.id)
     if (id||id==0) return <Messages id={params.id} />;
-    else console.log("test")
+    // else console.log("test")
     return <ToHome />
 }

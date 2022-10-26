@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Button from "@mui/material/Button"
 import mySetting from "./myGlobalSetting"
 
 export default function Register() {
@@ -113,7 +114,7 @@ export default function Register() {
                         />
                     </div>
                     <div className="flex justify-center flex-col items-center my-4">
-                        <button className="px-4 mb-2 py-2 w-fit flex flex-row items-center text-white bg-blue-300 hover:bg-blue-400 rounded-lg cursor-pointer" type="submit">Log In</button>
+                    <Button color="primary" size='large' className="font-bold" variant="contained" type="submit"><div className="font-bold">Resgister</div></Button>
                         <div className="text-center">
                             <span className="text-base">
                                 Already have an account ? <Link className="text-blue-500" to="/login">Login.</Link>

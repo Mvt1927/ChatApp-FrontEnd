@@ -1,17 +1,16 @@
-import { Component } from "react";
+import * as React from "react";
+import IconButton from '@mui/material/IconButton';
+import Avatar from '@mui/material/Avatar';
 import ContactCardContainer from "./contactCardContainer";
 import FunctionButton from "../funBtn";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import Divider from "@mui/material/Divider";
+import Settings from "@mui/icons-material/Settings";
+import Logout from "@mui/icons-material/Logout";
 
-export default function ContactsContainer({id,navigate,changeChat,contacts}) {
-    var testObj = {
-        // srcAvatar:
-        //         "https://scontent.fdad3-3.fna.fbcdn.net/v/t39.30808-1/274667595_105812578700442_338875092787591085_n.jpg?stp=dst-jpg_p100x100&_nc_cat=111&ccb=1-7&_nc_sid=7206a8&_nc_ohc=cBP3MkrBkPgAX9qG4uG&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fdad3-3.fna&oh=00_AT8cbdCEnkhRh2axzNXmwhYO3YrJp2SvlZprALU1jD47dg&oe=632DD10D",
-        username: "Quốc Việt",
-        lastMsg: "Việt đã gọi cho bạn.",
-        id: "0",
-        timeLastMsg:
-            "Mon Sep 10 2021 21:24:40 GMT+0700 (Giờ Đông Dương)",
-    };
+export default function ContactsContainer({ id, navigate, changeChat, contacts }) {
     const handleScroll = (e) => {
         e.preventDefault();
         var element = document.getElementById("under_line");
@@ -21,40 +20,104 @@ export default function ContactsContainer({id,navigate,changeChat,contacts}) {
             element.className = "";
         }
     };
-    const changeCurrentChat = (id,contact) => {
-        changeChat(id,contact)
+    const changeCurrentChat = (id, contact) => {
+        changeChat(id, contact)
     };
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const menuOpen = Boolean(anchorEl);
+    const handleAvatarClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+
     return (
-        <div className="left border-r border-border-color flex flex-col flex-shrink-0 flex-grow-0">
+        <div className="left border-r border-border-color flex-col flex-shrink-0 flex-grow-0 hidden sm:flex">
             <div className="user-top-left flex flex-col px-4 py-2.5 h-14">
-                <div className="user flex flex-row pad">
-                    <div className="avatar-left w-3/12 flex">
-                        <div className="w-9 h-9 hover:bg-[#00000020] hover:opacity-100 rounded-full cursor-pointer">
+                <div className="user flex flex-row pad justify-around items-center">
+                    <IconButton onClick={handleAvatarClick} sx={{ width: 42, height: 42, ml: 0 }} /* className="avatar-left w-3/12 flex" */>
+                        <Avatar sx={{ width: 36, height: 36 }} /* className="w-9 h-9 hover:bg-[#00000020] hover:opacity-100 rounded-full cursor-pointer" */>
                             <img
-                                className="w-9 rounded-full hover:mix-blend-overlay hover:bg-black"
+                                // className="w-9 rounded-full hover:mix-blend-overlay hover:bg-black"
                                 src="/avatar.jpg"
                                 alt="avatar"
                             />
-                        </div>
-                    </div>
+                        </Avatar>
+                    </IconButton>
+                    
+                        <Menu
+                            className="account-menu"
+                            anchorEl={anchorEl}
+                            id="account-menu"
+                            open={menuOpen}
+                            onClose={handleMenuClose}
+                            onClick={handleMenuClose}
+                            PaperProps={{
+                                elevation: 0,
+                                sx: {
+                                    overflow: 'visible',
+                                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                    mt: 1.5,
+                                    '& .MuiAvatar-root': {
+                                        width: 32,
+                                        height: 32,
+                                        ml: 0,
+                                        mr: 1,
+                                    },
+                                    '&:before': {
+                                        content: '""',
+                                        display: 'block',
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 14,
+                                        width: 10,
+                                        height: 10,
+                                        bgcolor: 'background.paper',
+                                        transform: 'translateY(-50%) rotate(45deg)',
+                                        zIndex: 0,
+                                    },
+                                },
+                            }}
+                            transformOrigin={{ horizontal: 'left', vertical: 'top' }}
+                            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                        >
+                            <MenuItem>
+                                <Avatar>
+                                    <img src="/avatar.jpg" alt="avatar" />
+                                </Avatar>
+                                Profile
+                            </MenuItem>
+                            <Divider />
+                            <MenuItem>
+                                <ListItemIcon className="flex items-center">
+                                    <Settings fontSize="small" />
+                                    <div className="mx-2">Settings</div>
+                                </ListItemIcon>
+                            </MenuItem>
+                            <MenuItem onClick={(e)=>{navigate('/logout')}}>
+                                <ListItemIcon className="flex items-center">
+                                    <Logout fontSize="small" />
+                                    <div className="mx-2">Logout</div>
+                                </ListItemIcon>
+                            </MenuItem>
+                        </Menu>
+                    
+
                     <div className="app-name-mid w-6/12 self-center">
                         <p className="text-center text-base">Chat</p>
                     </div>
                     <div className="fun-btn-right w-3/12 text-center flex flex-row justify-center">
                         <FunctionButton
-                            className="meeting-button-left"
-                            wight="9"
-                            height="9"
-                            iconClassName="fa-light fa-video-plus"
-                            iconSize="text-lg"
-                        />
+                            size={36}
+                            className="text-black text-lg fa-light fa-video-plus"
+                        ></FunctionButton>
                         <FunctionButton
-                            className="new-button-right"
-                            wight="9"
-                            height="9"
-                            iconClassName="icon bi bi-pencil-square"
-                            iconSize="text-lg"
-                        />
+                            size={36}
+                            className="text-black text-lg icon bi bi-pencil-square"
+                        ></FunctionButton>
                     </div>
                 </div>
             </div>
@@ -74,10 +137,10 @@ export default function ContactsContainer({id,navigate,changeChat,contacts}) {
             <div id="under_line"></div>
             <div className="list-friend-bottom overflow:hidden h-10/12">
                 <div
-                    onScroll={e=>handleScroll(e)}
-                    className="overflow-scroll px-1.5 h-full"
+                    onScroll={e => handleScroll(e)}
+                    className="overflow-scroll px-1.5 h-full space-y-1"
                 >
-                    {contacts.map((contact, index)=>{
+                    {contacts.map((contact, index) => {
                         return <ContactCardContainer key={contact.id} index={index} selectID={id} obj={contact} navigate={navigate} changeChat={changeCurrentChat} />
                     })}
                 </div>

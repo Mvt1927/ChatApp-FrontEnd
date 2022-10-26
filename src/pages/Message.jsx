@@ -10,7 +10,7 @@ import ChatsContainer from "../components/Chats/chatsContainer";
 import axios from "axios";
 
 
-export default function Message({id}) {
+export default function Message({ id }) {
     const socket = useRef();
     const [currentChatID, setCurrentChatID] = useState(undefined);
     const [currentChat, setCurrentChat] = useState(undefined);
@@ -47,18 +47,26 @@ export default function Message({id}) {
                 }
             })
         }
-    }, [id,contacts])
+    }, [id, contacts])
 
     useEffect(() => {
         const getData = async () => {
             if (currentUser) {
-                const users = await axios.post(myGlobalSetting.USERS, {
-                    token: sessionStorage.getItem(myGlobalSetting.ACCESS_TOKEN)
-                }).then(({ data }) => {
+                const config = {
+                    headers: {
+                        Authorization: 'Bearer ' + sessionStorage.getItem(myGlobalSetting.ACCESS_TOKEN)
+                    }
+                }
+                const users = await axios.get(
+                    myGlobalSetting.USERS,
+                    config
+                ).then(({ data }) => {
                     if (data.status)
                         return data.users
                     else return []
-                }).catch(() => { return [] })
+                }).catch((e) => { 
+                    console.log(e)
+                    return [] })
                 setContacts(users)
                 sessionStorage.setItem(myGlobalSetting.SOCKET, socket.current)
             }
@@ -68,7 +76,7 @@ export default function Message({id}) {
     useEffect(() => {
         if (currentUser) {
             socket.current = io(myGlobalSetting.HOST, {
-                auth: {
+                extraHeaders: {
                     access_token: token,
                 }
             });
