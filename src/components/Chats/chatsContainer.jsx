@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 import myGlobalSetting from "../../pages/myGlobalSetting";
 import axios from "axios"
 import jwtDecode from "jwt-decode";
-import Menu from "@mui/material/Menu"
 import Picker from "emoji-picker-react";
 
 export default function ChatsContainer({ id, currentChat, socket, arrivalMessage, setArrivalMessage }) {
@@ -49,7 +48,7 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
 
     useEffect(() => {
         if (socket.current) {
-            socket.current.on("reciveMessage", (data) => {
+            socket.current.on("receiveMessage", (data) => {
                 setArrivalMessage(data);
             });
         }
@@ -101,16 +100,6 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
         message += emojiObject.emoji;
         // message += `<img height="16" width="16" alt="🙂" referrerpolicy="origin-when-cross-origin" src="https://static.xx.fbcdn.net/images/emoji.php/v9/ta5/1.5/16/1f642.png">`;
         setMsg(message);
-    };
-
-
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const menuOpen = Boolean(anchorEl);
-    const handleAvatarClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleMenuClose = () => {
-        setAnchorEl(null);
     };
     return (
         <div id={id} className="right-container flex flex-col h-full">
