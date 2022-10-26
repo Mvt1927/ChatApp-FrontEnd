@@ -10,7 +10,7 @@ import Divider from "@mui/material/Divider";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
-export default function ContactsContainer({ id, navigate, changeChat, contacts }) {
+export default function ContactsContainer({ id, navigate, changeChat, contacts, currentUser }) {
     const handleScroll = (e) => {
         e.preventDefault();
         var element = document.getElementById("under_line");
@@ -88,7 +88,7 @@ export default function ContactsContainer({ id, navigate, changeChat, contacts }
                                 <Avatar>
                                     <img src="/avatar.jpg" alt="avatar" />
                                 </Avatar>
-                                Profile
+                                {currentUser?.username}
                             </MenuItem>
                             <Divider />
                             <MenuItem>

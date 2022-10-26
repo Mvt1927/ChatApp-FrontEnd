@@ -92,7 +92,7 @@ export default function Message({ id }) {
     if (status)
         return (
             <div className="App flex flex-row">
-                <ContactsContainer contacts={contacts} id={currentChatID} navigate={navigate} changeChat={handleChatChange} />
+                <ContactsContainer currentUser={currentUser} contacts={contacts} id={currentChatID} navigate={navigate} changeChat={handleChatChange} />
 
                 <div className="chat">
                     {!currentChat ? <Welcome currentUser={currentUser} /> :
