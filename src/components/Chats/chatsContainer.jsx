@@ -6,6 +6,7 @@ import myGlobalSetting from "../../pages/myGlobalSetting";
 import axios from "axios"
 import jwtDecode from "jwt-decode";
 import Picker from "emoji-picker-react";
+import { useNavigate } from "react-router-dom";
 
 export default function ChatsContainer({ id, currentChat, socket, arrivalMessage, setArrivalMessage }) {
     const [messages, setMessages] = useState([]);
@@ -13,8 +14,8 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
     const scrollRef = useRef();
     // const [arrivalMessage, setArrivalMessage] = useState(null);
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const navigate = useNavigate()
     const handleEmojiPickerhideShow = (e) => {
-        handleAvatarClick(e)
         setShowEmojiPicker(!showEmojiPicker);
     };
 
@@ -91,6 +92,7 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
     const handleEnter = (e) => {
         if (e.code == 'Enter') {
             sendChat(e);
+
         }
     }
     const handleEmojiClick = (emojiObject) => {
@@ -101,11 +103,26 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
         // message += `<img height="16" width="16" alt="🙂" referrerpolicy="origin-when-cross-origin" src="https://static.xx.fbcdn.net/images/emoji.php/v9/ta5/1.5/16/1f642.png">`;
         setMsg(message);
     };
+
+    const handleBackClick = (e) => {
+        e.preventDefault();
+        navigate('/m')
+    }
+
     return (
         <div id={id} className="right-container flex flex-col h-full">
             <div className="friend-top-right-container border-b border-border-color h-14">
                 <div className="friend-container h-full flex flex-row justify-between px-2.5 py-1">
-                    <UserCardTopContainer obj={currentChat} />
+                    <div className="w-fit flex items-center flex-nowrap">
+                        <div className="md:hidden contents">
+                            <FunctionButton
+                                onClick={handleBackClick}
+                                className="text-blue-400 fa-solid fa-arrow-left text-2xl"
+                                size={36}
+                            />
+                        </div>
+                        <UserCardTopContainer obj={currentChat} />
+                    </div>
                     <div className="fun-btn flex flex-row w-fit items-center">
                         <FunctionButton
                             className="text-blue-400 fa-solid fa-phone text-lg"
@@ -153,9 +170,9 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
                                     })}
                             </div>
                             {showEmojiPicker &&
-                        <div style={{bottom:68, right:64}} className="absolute hidden text-xs w-[30vw] md:flex emoji-container">
-                            <Picker width={"30vw"} height={"50vh"} disableAutoFocus={true} suggestedEmojisMode={false} defaultSkinTone onEmojiClick={handleEmojiClick} />
-                        </div>}
+                                <div style={{ bottom: 68, right: 64 }} className="absolute hidden text-xs w-[30vw] md:flex emoji-container">
+                                    <Picker width={"30vw"} height={"50vh"} disableAutoFocus={true} suggestedEmojisMode={false} defaultSkinTone onEmojiClick={handleEmojiClick} />
+                                </div>}
                         </div>
                     </div>
                     <div className="message-fuc-btn-container h-14 border-t border-f2f2f2">
@@ -185,11 +202,13 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
                                     onKeyPress={e => { handleEnter(e) }}
                                     value={msg}
                                 />
-                                <FunctionButton
-                                    onClick={handleEmojiPickerhideShow}
-                                    className="fa-solid fa-face-smile text-lg text-blue-400 hover:bg-[#dddddd]"
-                                    size={36}
-                                />
+                                <div className="md:contents hidden ">
+                                    <FunctionButton
+                                        onClick={handleEmojiPickerhideShow}
+                                        className="fa-solid fa-face-smile text-lg text-blue-400"
+                                        size={36}
+                                    />
+                                </div>
                             </div>
                             <div className="fun-send-btn-end w-15 flex justify-center">
                                 <FunctionButton

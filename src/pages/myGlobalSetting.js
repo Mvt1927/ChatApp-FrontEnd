@@ -1,6 +1,6 @@
 class mySetting{
     constructor(){
-        this.HOST = "http://127.0.0.1:3333"
+        this.HOST = "http://192.168.1.15:3333"
         this.API = this.HOST+"/api";
         this.AUTH = this.HOST+"/auth";
         this.CHAT = this.HOST+"/chat";

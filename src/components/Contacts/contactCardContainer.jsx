@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Button from "@mui/material/Button"
+import Avatar from '@mui/material/Avatar'
 
 class ContactCardContainer extends Component {
     constructor(props) {
@@ -72,16 +73,17 @@ class ContactCardContainer extends Component {
         return (
             <div color="inherit" id={this.userInformation.id} className={(this.selectID == this.userInformation.id ? " select " : "") + "" + this.props.className} onClick={(event) => this.handleOnClick(event, this.userInformation.id)}>
                 <Button className="w-full" color="inherit">
-                    <div className="item-friend w-full h-full flex flex-row text-justify normal-case">
-                        <div className="friend-avatar w-1/5 pr-2.5 ">
+                    <div className="item-friend w-full h-full flex flex-row text-justify items-center normal-case ">
+                        <div className="w-fit pr-2.5">
+                        <Avatar sx={{ width: 42, height: 42 }} >
                             <img
-                                className="w-12 object-cover rounded-full box-border"
                                 src={this.userInformation.srcAvatar}
                                 alt=""
                             />
+                        </Avatar>
                         </div>
                         <div className="friend-info w-4/5 flex flex-col">
-                            <span className="name-friend text text-base">{this.userInformation.username}</span>
+                            <span className="name-friend text text-base truncate">{this.userInformation.username}</span>
                             <div className="h-2"></div>
                             <div className="lastest-message flex flex-row">
                                 <span className="short-text-latest-message max-w-fit w-4/6 text-xs font-light whitespace-nowrap truncate">

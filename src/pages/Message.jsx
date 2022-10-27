@@ -46,6 +46,9 @@ export default function Message({ id }) {
                     setCurrentChat(contact)
                 }
             })
+        }else {
+            setCurrentChatID(undefined)
+            setCurrentChat(undefined)
         }
     }, [id, contacts])
 
@@ -94,9 +97,9 @@ export default function Message({ id }) {
             <div className="App flex flex-row">
                 <ContactsContainer currentUser={currentUser} contacts={contacts} id={currentChatID} navigate={navigate} changeChat={handleChatChange} />
 
-                <div className="chat">
+                <div className={`chat ${!currentChatID?'hidden':''} md:block`}>
                     {!currentChat ? <Welcome currentUser={currentUser} /> :
-                        <ChatsContainer id={currentChatID} currentChat={currentChat} socket={socket} arrivalMessage={arrivalMessage} setArrivalMessage={setArrivalMessage} />
+                        <ChatsContainer id={currentChatID} currentChat={currentChat} socket={socket} arrivalMessage={arrivalMessage} setCurrentChat={setCurrentChat} setCurrentChatID={setCurrentChatID} setArrivalMessage={setArrivalMessage} />
                     }
                 </div>
             </div>
