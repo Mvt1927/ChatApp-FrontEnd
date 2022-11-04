@@ -1,8 +1,8 @@
 import {React, useEffect, useRef} from "react";
 import { BrowserRouter, Routes , Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
-import Register from "./pages/Register";
+import Login from "./pages/Login.jsx";
+import Logout from "./pages/Logout.jsx";
+import Register from "./pages/Register.jsx";
 import myGlobalSetting from "./myGlobalSetting";
 import MessageWId from "./MessageRouter"
 import Message from "./pages/Message";
