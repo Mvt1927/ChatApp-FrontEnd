@@ -85,6 +85,9 @@ module.exports = {
                 '10/12': '83.3333333333%',
                 '11/12': '91.6666666666%',
                 '-h-14': 'calc(100% - 3.5rem)'
+            },
+            fontFamily:{
+                'base': '\"Be Vietnam Pro\",\'emoji\', sans-serif;'
             }
         },
     },

@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import FunctionButton from "../funBtn";
+import FunctionButton from "../functionButton";
 import UserCardTopContainer from "./userCardTopContainer";
 import { v4 as uuidv4 } from "uuid";
-import myGlobalSetting from "../../pages/myGlobalSetting";
+import myGlobalSetting from "/src/myGlobalSetting";
 import axios from "axios"
 import jwtDecode from "jwt-decode";
 import Picker from "emoji-picker-react";
 import { useNavigate } from "react-router-dom";
 
-export default function ChatsContainer({ id, currentChat, socket, arrivalMessage, setArrivalMessage }) {
+export default function ChatsContainer({ currentChatID, currentChat, socket, arrivalMessage, setArrivalMessage }) {
     const [messages, setMessages] = useState([]);
     const [msg, setMsg] = useState("");
     const scrollRef = useRef();
@@ -28,9 +28,9 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
                     Authorization: 'Bearer ' + token
                 }
             }
-            if (token && id) {
+            if (token && currentChatID) {
                 const chats = await axios.post(myGlobalSetting.getChats, {
-                    receiverId: Number(id),
+                    receiverId: Number(currentChatID),
                 }, config).then(({ data }) => {
                     if (data.status) {
                         return data.chats
@@ -45,7 +45,7 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
         }
         setShowEmojiPicker(false)
         getChat()
-    }, [currentChat, id]);
+    }, [currentChat, currentChatID]);
 
     useEffect(() => {
         if (socket.current) {
@@ -78,15 +78,13 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
     const handleSendMsg = async (msg) => {
         const token = sessionStorage.getItem(myGlobalSetting.ACCESS_TOKEN)
         const payload = await jwtDecode(token);
-        // console.log(payload)
-        // console.log(id)
         socket.current.emit("sendMessage", {
             access_token: token,
-            to: id,
+            to: currentChatID,
             msg: msg,
         });
         const msgs = [...messages];
-        msgs.push({ from: Number(payload.id), to: Number(id), msg: msg });
+        msgs.push({ from: Number(payload.id), to: Number(currentChatID), msg: msg });
         setMessages(msgs);
     };
     const handleEnter = (e) => {
@@ -110,7 +108,7 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
     }
 
     return (
-        <div id={id} className="right-container flex flex-col h-full">
+        <div id={currentChatID} className="right-container flex flex-col h-full">
             <div className="friend-top-right-container border-b border-border-color h-14">
                 <div className="friend-container h-full flex flex-row justify-between px-2.5 py-1">
                     <div className="w-fit flex items-center flex-nowrap">
@@ -150,18 +148,18 @@ export default function ChatsContainer({ id, currentChat, socket, arrivalMessage
                                         return (
                                             <div className="message-container" ref={scrollRef} key={uuidv4()}>
 
-                                                {message.to == id
+                                                {message.to == currentChatID
                                                     ? <div className="message sender flex justify-end" >
                                                         <div className={`content w-fit bg-blue-400 rounded-3xl px-3 py-2 break-words 
-                                                    ${messages[index - 1]?.to == id ? "rounded-tr-md my-[1px]" : "my-0.5 "}
-                                                    ${messages[index + 1]?.to == id ? "rounded-br-md my-[1px]" : "my-0.5 "}`}>
+                                                    ${messages[index - 1]?.to == currentChatID ? "rounded-tr-md my-[1px]" : "my-0.5 "}
+                                                    ${messages[index + 1]?.to == currentChatID ? "rounded-br-md my-[1px]" : "my-0.5 "}`}>
                                                             <p className="w-fit max-w-[50vw] sm:max-w-[30vw] text-base font-light text-white">{message.msg}</p>
                                                         </div>
                                                     </div>
                                                     : <div className="message reciver flex" >
                                                         <div className={`content w-fit bg-[#E4E6EB] rounded-3xl px-3 py-2 break-words 
-                                                    ${messages[index - 1]?.from == id ? "rounded-tl-md my-[1px] " : "my-0.5"} 
-                                                    ${messages[index + 1]?.from == id ? "rounded-bl-md my-[1px]" : "my-0.5"}`}>
+                                                    ${messages[index - 1]?.from == currentChatID ? "rounded-tl-md my-[1px] " : "my-0.5"} 
+                                                    ${messages[index + 1]?.from == currentChatID ? "rounded-bl-md my-[1px]" : "my-0.5"}`}>
                                                             <p className="w-fit max-w-[50vw] sm:max-w-[30vw] text-base font-light">{message.msg}</p>
                                                         </div>
                                                     </div>}

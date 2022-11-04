@@ -4,17 +4,15 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Button from "@mui/material/Button"
 import "react-toastify/dist/ReactToastify.css";
-import mySetting from "./myGlobalSetting"
+import myGlobalSetting from "/src/myGlobalSetting"
+
 
 export default function Login() {
-    const loginRoute = mySetting.loginAPI;
+    const loginRoute = myGlobalSetting.loginAPI;
     const navigate = useNavigate();
-    const token = sessionStorage.getItem(mySetting.ACCESS_TOKEN)
+    const token = sessionStorage.getItem(myGlobalSetting.ACCESS_TOKEN)
     if (token) {
-        useEffect(() => {
-            navigate('/m')
-        });
-        return <></>
+        return navigate('/m')
     }
     const [values, setValues] = useState({ username: "", password: "" });
     const toastOptions = {
@@ -32,11 +30,9 @@ export default function Login() {
     const validateForm = () => {
         const { username, password } = values;
         if (username === "") {
-            // console.error("Email and Password is required.");
             toast.error("Email and Password is required.", toastOptions);
             return false;
         } else if (password === "") {
-            // console.error("Email and Password is required.");
             toast.error("Email and Password is required.", toastOptions);
             return false;
         }
@@ -50,14 +46,12 @@ export default function Login() {
             const { data } = await axios.post(loginRoute, {
                 username: username,
                 password: password,
-            });
+            }).catch(e=>{console.error(e)});
             if (data.status === false) {
                 toast.error(data.msg, toastOptions);
-                // console.log(data.msg)
             }
             if (data.status === true) {
-                sessionStorage.setItem(mySetting.ACCESS_TOKEN,data.access_token);
-                // console.log(sessionStorage.getItem(mySetting.ACCESS_TOKEN));
+                sessionStorage.setItem(myGlobalSetting.ACCESS_TOKEN,data.access_token);
                 navigate("/m");
             }
         }
@@ -100,7 +94,7 @@ export default function Login() {
                 </form>
             </div>
         </div>
-            <ToastContainer className={"text-base"} />
+            <ToastContainer className="text-base" />
         </>
     );
 }

@@ -1,47 +1,24 @@
 import {React, useEffect, useRef} from "react";
-import { BrowserRouter, Routes , Route ,useParams, useNavigate } from "react-router-dom";
-import Messages from "./pages/Message";
-import Test from "./pages/Test"
-import Login from "./pages/login";
-import Register from "./pages/register";
-import myGlobalSetting from "./pages/myGlobalSetting";
+import { BrowserRouter, Routes , Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
+import Register from "./pages/Register";
+import myGlobalSetting from "./myGlobalSetting";
 import MessageWId from "./MessageRouter"
-import { ToHome } from "./navToHome";
-import { io } from "socket.io-client";
-// import { socket } from "./pages/service/socket";
+import Message from "./pages/Message";
 
 
-function ToLogin() {
-    const navigate = useNavigate()
-    return useEffect(() => {
-        navigate('/m')
-    })
-}
-function ToRoute(path) {
-    const navigate = useNavigate()
-    return useEffect(() => {
-        navigate(path.url)
-    })
-}
-
-function Logout(){
-    sessionStorage.removeItem(myGlobalSetting.ACCESS_TOKEN)
-    const socket = sessionStorage.getItem(myGlobalSetting.SOCKET)
-    socket.current?.disconnect()
-    return <ToHome />
-}
 export default function MyRouter(){
+    const socket = useRef();
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/m/:id" exact element={<MessageWId />} />
-                <Route path="/m" exact element={<MessageWId />}/>
-                <Route path="" exact element={<ToHome />}/>
-                {/* <Route path="/test/:id" exact element={<Test id={'123'}/>}/>
-                <Route path="/test/login" element={<Login />}/> */}
-                <Route path="/login" element={<Login />}/>
-                <Route path="/logout" element={<Logout />}/>
-                <Route path="/register" element={<Register />}/>
+                <Route path="" exact element={<Login />}/>
+                <Route path={myGlobalSetting.ROUTE.REGISTER} element={<Register />}/>
+                <Route path={myGlobalSetting.ROUTE.LOGIN} element={<Login />}/>
+                <Route path={myGlobalSetting.ROUTE.LOGOUT} element={<Logout socket={socket} />}/>
+                <Route path={myGlobalSetting.ROUTE.MESSAGE} exact element={<Message socket={socket}/>}/>
+                <Route path={myGlobalSetting.ROUTE.MESSAGE_ID} exact element={<Message socket={socket}/>} />
             </Routes>
         </BrowserRouter>
     )

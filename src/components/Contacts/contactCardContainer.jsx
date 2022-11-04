@@ -48,8 +48,8 @@ class ContactCardContainer extends Component {
         }
         if (this.userInformation.chat.time !== "" && new Date(Date.parse(this.userInformation.chat.time)) != 'Invalid Date') {
             var currentDate = new Date()
-            const dateParse = Date.parse(this.userInformation.chat.time.substring(0, this.userInformation.chat.time.length - 1))
-            var lastDate = new Date(dateParse);
+            // const dateParse = Date.parse(this.userInformation.chat.time.substring(0, this.userInformation.chat.time.length - 1))
+            var lastDate = new Date(this.userInformation.chat.time.substring(0, this.userInformation.chat.time.length - 1));
             var text_year = ' year'
             var text_week = ' week'
             var text_day = ' day'
@@ -84,9 +84,8 @@ class ContactCardContainer extends Component {
                         </div>
                         <div className="friend-info w-4/5 flex flex-col">
                             <span className="name-friend text text-base truncate">{this.userInformation.username}</span>
-                            <div className="h-2"></div>
                             <div className="lastest-message flex flex-row">
-                                <span className="short-text-latest-message max-w-fit w-4/6 text-xs font-light whitespace-nowrap truncate">
+                                <span className="short-text-latest-message max-w-fit w-4/6 text-xs font-light whitespace-nowrap truncate font-base">
                                     {this.userInformation.chat.from ? this.currentUserId == this.userInformation.chat.from ? ("You: " + this.userInformation.chat.msg) : this.userInformation.chat.msg : ""}
                                 </span>
                                 <p className="text-xs">&nbsp;</p>

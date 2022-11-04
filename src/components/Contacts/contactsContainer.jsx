@@ -2,7 +2,7 @@ import * as React from "react";
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import ContactCardContainer from "./contactCardContainer";
-import FunctionButton from "../funBtn";
+import FunctionButton from "../functionButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -10,7 +10,7 @@ import Divider from "@mui/material/Divider";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 
-export default function ContactsContainer({ id, navigate, changeChat, contacts, currentUser }) {
+export default function ContactsContainer({ currentChatID, navigate, changeChat, contacts, currentUser }) {
     const handleScroll = (e) => {
         e.preventDefault();
         var element = document.getElementById("under_line");
@@ -20,8 +20,8 @@ export default function ContactsContainer({ id, navigate, changeChat, contacts, 
             element.className = "";
         }
     };
-    const changeCurrentChat = (id, contact) => {
-        changeChat(id, contact)
+    const changeCurrentChat = (currentChatID, contact) => {
+        changeChat(currentChatID, contact)
     };
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,7 +35,7 @@ export default function ContactsContainer({ id, navigate, changeChat, contacts, 
 
 
     return (
-        <div className={`${id ? ' hidden md:w-my-left md:flex' : ' md:flex'} sm:w-my-left border-r border-border-color flex-col flex-shrink-0 flex-grow-0`}>
+        <div className={`${currentChatID ? ' hidden md:w-my-left md:flex' : ' md:flex'} sm:w-my-left border-r border-border-color flex-col flex-shrink-0 flex-grow-0`}>
             <div className="user-top-left flex flex-col px-4 py-2.5 h-14">
                 <div className="user flex flex-row pad justify-between items-center">
                     <IconButton onClick={handleAvatarClick} sx={{ width: 42, height: 42, ml: 0 }} /* className="avatar-left w-3/12 flex" */>
@@ -139,8 +139,8 @@ export default function ContactsContainer({ id, navigate, changeChat, contacts, 
                     onScroll={e => handleScroll(e)}
                     className="overflow-scroll px-1.5 h-full space-y-1"
                 >
-                    {contacts.map((contact, index) => {
-                        return <ContactCardContainer key={contact.id} index={index} selectID={id} obj={contact} navigate={navigate} changeChat={changeCurrentChat} />
+                    {contacts&&contacts.map((contact, index) => {
+                        return <ContactCardContainer key={contact.id} index={index} selectID={currentChatID} obj={contact} navigate={navigate} changeChat={e=>{changeCurrentChat(contact.id,contact)}} />
                     })}
                 </div>
             </div>

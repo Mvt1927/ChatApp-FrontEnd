@@ -4,7 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Button from "@mui/material/Button"
-import mySetting from "./myGlobalSetting"
+import mySetting from "/src/myGlobalSetting"
 
 export default function Register() {
     const loginRoute = mySetting.signupAPI;

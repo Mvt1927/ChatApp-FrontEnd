@@ -1,8 +1,8 @@
 import React, { Component, useEffect, useRef, useState } from "react";
 import jwt_decode from 'jwt-decode';
-import "./css/Message.css";
-import myGlobalSetting from "./myGlobalSetting";
-import { useNavigate } from "react-router-dom";
+import "/src/css/Message.css";
+import myGlobalSetting from "../myGlobalSetting";
+import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import ContactsContainer from "../components/Contacts/contactsContainer"
 import Welcome from "../components/Chats/Welcome";
@@ -10,21 +10,26 @@ import ChatsContainer from "../components/Chats/chatsContainer";
 import axios from "axios";
 
 
-export default function Message({ id }) {
-    const socket = useRef();
-    const [currentChatID, setCurrentChatID] = useState(undefined);
-    const [currentChat, setCurrentChat] = useState(undefined);
-    const [contacts, setContacts] = useState([]);
+export default function Message({ socket }) {
+
+    const [currentChatID, setCurrentChatID] = useState(NaN);
+    var [currentChatUser, setCurrentChatUser] = useState(undefined);
+    const [contacts, setContacts] = useState(null);
     const [currentUser, setCurrentUser] = useState(undefined);
     const [arrivalMessage, setArrivalMessage] = useState(null);
+
     const navigate = useNavigate()
+    const params = useParams();
+
+    const id = params.id
+
     const token = sessionStorage.getItem(myGlobalSetting.ACCESS_TOKEN)
 
     var status = true
+
     useEffect(() => {
         if (!token) {
-            navigate("/login");
-            status = false
+            navigate(myGlobalSetting.ROUTE.LOGIN)
         } else {
             try {
                 setCurrentUser(
@@ -32,25 +37,11 @@ export default function Message({ id }) {
                 );
             } catch (error) {
                 sessionStorage.removeItem(myGlobalSetting.ACCESS_TOKEN)
-                navigate("/login");
+                navigate(myGlobalSetting.ROUTE.LOGIN);
                 status = false
             }
         }
     }, [token]);
-
-    useEffect(() => {
-        if (id) {
-            setCurrentChatID(id)
-            contacts.map((contact) => {
-                if (contact.id == id) {
-                    setCurrentChat(contact)
-                }
-            })
-        }else {
-            setCurrentChatID(undefined)
-            setCurrentChat(undefined)
-        }
-    }, [id, contacts])
 
     useEffect(() => {
         const getData = async () => {
@@ -66,16 +57,18 @@ export default function Message({ id }) {
                 ).then(({ data }) => {
                     if (data.status)
                         return data.users
-                    else return []
-                }).catch((e) => { 
+                    else return null
+                }).catch((e) => {
                     console.log(e)
-                    return [] })
+                    return null
+                })
                 setContacts(users)
                 sessionStorage.setItem(myGlobalSetting.SOCKET, socket.current)
             }
         }
         getData()
     }, [currentUser, arrivalMessage]);
+
     useEffect(() => {
         if (currentUser) {
             socket.current = io(myGlobalSetting.HOST, {
@@ -87,19 +80,42 @@ export default function Message({ id }) {
         }
     }, [currentUser]);
 
+    useEffect(() => {
+        if (Number.isInteger(parseInt(id)) && parseInt(id) >= 0) {
+            const chatID = parseInt(id)
+            setCurrentChatID(chatID);
+            if (contacts) {
+                contacts.map(async (contact) => {
+                    if (contact.id == chatID) {
+                        setCurrentChatUser(contact)
+                    }
+                });
+                if (!currentChatUser) {
+                    setCurrentChatID(NaN)
+                    setCurrentChatUser(undefined)
+                    navigate(myGlobalSetting.ROUTE.MESSAGE)
+                }
+            }
+        } else {
+            setCurrentChatID(NaN)
+            setCurrentChatUser(undefined)
+        }
+    }, [id, contacts])
+
     const handleChatChange = (id, chat) => {
         setCurrentChatID(id)
-        setCurrentChat(chat);
+        setCurrentChatUser(chat);
     };
 
     if (status)
         return (
             <div className="App flex flex-row">
-                <ContactsContainer currentUser={currentUser} contacts={contacts} id={currentChatID} navigate={navigate} changeChat={handleChatChange} />
+                <ContactsContainer currentUser={currentUser} contacts={contacts} currentChatID={currentChatID} navigate={navigate} changeChat={handleChatChange} />
 
-                <div className={`chat ${!currentChatID?'hidden':''} md:block`}>
-                    {!currentChat ? <Welcome currentUser={currentUser} /> :
-                        <ChatsContainer id={currentChatID} currentChat={currentChat} socket={socket} arrivalMessage={arrivalMessage} setCurrentChat={setCurrentChat} setCurrentChatID={setCurrentChatID} setArrivalMessage={setArrivalMessage} />
+                <div className={`chat ${!currentChatID ? 'hidden' : ''} md:block`}>
+                    {!currentChatUser
+                        ? <Welcome currentUser={currentUser} />
+                        : <ChatsContainer currentChatID={currentChatID} currentChat={currentChatUser} socket={socket} arrivalMessage={arrivalMessage} setCurrentChat={setCurrentChatUser} setCurrentChatID={setCurrentChatID} setArrivalMessage={setArrivalMessage} />
                     }
                 </div>
             </div>
